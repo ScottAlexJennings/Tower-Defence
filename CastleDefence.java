@@ -1,8 +1,5 @@
-import bugs.Bug;
-import bugs.ConcurrentModificationBug;
-import bugs.NoneTerminationBug;
-import bugs.NullPointerBug;
-import building.Building;
+import knights.Team;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -12,15 +9,20 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Objects;
-import students.Team;
 
-public class BuildingDefence {
+import animal.Animal;
+import animal.Wolf;
+import animal.Bear;
+import animal.Boar;
+import castle.Castle;
+
+public class CastleDefence {
 
   // Method that makes an arraylist of the bugs on a certain line from the .txt file. Takes the file
   // name and the current wave that is determined to entre.
-  private static ArrayList<Bug> makeWavesOfBugs(String fileName, int waveNum) {
+  private static ArrayList<Animal> makeWavesOfBugs(String fileName, int waveNum) {
     // Initiate arraylist
-    ArrayList<Bug> nextWave = null;
+    ArrayList<Animal> nextWave = null;
 
     // Try/catch block to catch the exception for no file or line
     try (BufferedReader ignored = new BufferedReader(new FileReader(fileName))) {
@@ -47,11 +49,11 @@ public class BuildingDefence {
 
         // Determine type og bug, make bug and add bugs
         if (Objects.equals(bugType, "CMB")) {
-          nextWave.add(new ConcurrentModificationBug(bugName, bugLevel, bugSteps));
+          nextWave.add(new Wolf(bugName, bugLevel, bugSteps));
         } else if (Objects.equals(bugType, "NPB")) {
-          nextWave.add(new NullPointerBug(bugName, bugLevel, bugSteps));
+          nextWave.add(new Boar(bugName, bugLevel, bugSteps));
         } else {
-          nextWave.add(new NoneTerminationBug(bugName, bugLevel, bugSteps));
+          nextWave.add(new Bear(bugName, bugLevel, bugSteps));
         }
       }
 
@@ -81,7 +83,7 @@ public class BuildingDefence {
     int initialKnowledgePoints = Integer.parseInt(args[3]);
 
     // Create objects
-    Building zepler = new Building(topFloor, constructionPoints);
+    Castle zepler = new Castle(topFloor, constructionPoints);
     Team aTeam = new Team(initialKnowledgePoints);
     Battle battle = new Battle(aTeam, zepler);
 
@@ -94,7 +96,7 @@ public class BuildingDefence {
     // by defeating all the bugs. That termination is in makeWaveOfBugs() for when there are no more line.
     while (zepler.getConstructionPoints() > 0) {
       if (counter % (8 * topFloor) == 0 || counter == 0) {
-        for (Bug bug : makeWavesOfBugs(fileName, waveNum)) {
+        for (Animal bug : makeWavesOfBugs(fileName, waveNum)) {
           zepler.addBug(bug);
         }
         waveNum++;

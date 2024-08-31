@@ -1,29 +1,31 @@
-import bugs.Bug;
-import building.Building;
+import knights.Knight;
+import knights.Team;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import students.Student;
-import students.Team;
+
+import animal.Animal;
+import castle.Castle;
 
 public class Battle {
 
   Team aTeam;
-  Building building;
+  Castle building;
 
   // Constructor
-  public Battle(Team aTeam, Building building) {
+  public Battle(Team aTeam, Castle building) {
     this.aTeam = aTeam;
     this.building = building;
   }
 
   // Create an array of the current students in the team and iterate through then to find a student at the lowest level.
-  private Student cheapestStudUpg() {
-    Student[] studentArr = aTeam.getStudents();
+  private Knight cheapestStudUpg() {
+    Knight[] studentArr = aTeam.getStudents();
 
     // Variable to hold the lowest level student
-    Student minLvl = studentArr[0];
-    for (Student student : studentArr) {
+    Knight minLvl = studentArr[0];
+    for (Knight student : studentArr) {
       // Check if the current or next student has a lower level.
       if (student.getLevel() < minLvl.getLevel()) {
         // If next is lower save it.
@@ -92,7 +94,7 @@ public class Battle {
 
   // Print the student level because I do not know how to print one parameter of an object in an
   // object array.
-  private void printStudLevel(ArrayList<Student> arrayList) {
+  private void printStudLevel(ArrayList<Knight> arrayList) {
     if (arrayList.size() == 1) {
       System.out.println("There is 1 " + arrayList.get(0).getStudType());
       System.out.println("Level: [" + arrayList.get(0).getLevel() + "]");
@@ -101,7 +103,7 @@ public class Battle {
           "There are " + arrayList.size() + " " + arrayList.get(0).getStudType() + "s");
       System.out.print("Levels: ");
       List<Integer> levels = new ArrayList<>();
-      for (Student s : arrayList) {
+      for (Knight s : arrayList) {
         levels.add(s.getLevel());
       }
       System.out.println(levels);
@@ -110,13 +112,13 @@ public class Battle {
 
   // Listing the students in the team
   private void listingStudents() {
-    ArrayList<Student> cyberArray = new ArrayList<>();
-    ArrayList<Student> aiArray = new ArrayList<>();
-    ArrayList<Student> csArray = new ArrayList<>();
-    ArrayList<Student> seArray = new ArrayList<>();
+    ArrayList<Knight> cyberArray = new ArrayList<>();
+    ArrayList<Knight> aiArray = new ArrayList<>();
+    ArrayList<Knight> csArray = new ArrayList<>();
+    ArrayList<Knight> seArray = new ArrayList<>();
 
     System.out.println("The current students are: ");
-    for (Student student : aTeam.getStudents()) {
+    for (Knight student : aTeam.getStudents()) {
       if (Objects.equals(student.getStudType(), "Cyber Student")) {
         cyberArray.add(student);
       } else if (Objects.equals(student.getStudType(), "AI Student")) {
@@ -148,7 +150,7 @@ public class Battle {
   private void listingBugs() {
     System.out.println("The bugs in the building are:");
     if (building.getAllBugs().length > 0) {
-      for (Bug bug : building.getAllBugs()) {
+      for (Animal bug : building.getAllBugs()) {
         System.out.println(
             bug.getName() + " is Level " + bug.getLevel() + " and on floor "
                 + bug.getCurrentFloor()
